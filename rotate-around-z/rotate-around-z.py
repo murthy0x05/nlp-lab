@@ -8,8 +8,9 @@ def rotate_around_z(points, theta):
     ])
 
     points = np.asarray(points)
+    print(points.shape)
 
     if points.ndim == 1:
-        return R @ points
+        return points @ R.T
     else:
         return points @ R.T
