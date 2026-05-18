@@ -37,14 +37,12 @@ def roi_pool(feature_map, rois, output_size):
                 w_start = int(x1 + j * bin_w)
                 w_end = int(x1 + (j + 1) * bin_w)
 
-                # Ensure at least one element
                 if h_end <= h_start:
                     h_end = h_start + 1
 
                 if w_end <= w_start:
                     w_end = w_start + 1
 
-                # Clamp bounds
                 h_start = max(0, min(h_start, H - 1))
                 h_end = max(1, min(h_end, H))
 
