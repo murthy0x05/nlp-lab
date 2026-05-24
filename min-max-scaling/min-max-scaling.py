@@ -7,7 +7,7 @@ def min_max_scaling(data):
     for j in range(C):
         X_min, X_max = X[:, j].min(), X[:, j].max()
         if X_min == X_max:
-            X[:, j] = np.zeros_like(X[:, j])
+            X[:, j] = np.zeros((1, ))
             continue
         for i in range(R):
             X[i][j] = (X[i][j] - X_min) / (X_max - X_min)
