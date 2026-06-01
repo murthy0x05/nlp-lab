@@ -8,12 +8,10 @@ def generate_anchors(feature_size, image_size, scales, aspect_ratios):
     center_x = (np.arange(feature_size) + 0.5) * stride
     center_y = (np.arange(feature_size) + 0.5) * stride
     
-    # Create the grid
     cx, cy = np.meshgrid(center_x, center_y)
     cx = cx.flatten()
     cy = cy.flatten()
 
-    # 2. Calculate widths and heights
     widths = scales[:, None] * np.sqrt(aspect_ratios[None, :])
     heights = scales[:, None] / np.sqrt(aspect_ratios[None, :])
     
