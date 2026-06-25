@@ -1,9 +1,8 @@
 import numpy as np
 
 def sample_var_std(x):
-    x = np.array(x)
+    x = np.asarray(x)
+    var = np.sum(np.power(x - np.mean(x), 2)) / (len(x) - 1)
+    std = np.sqrt(var)
 
-    N = x.shape[0]
-    var = (1 / (N - 1)) * np.square((x - x.mean())).sum()
-
-    return [var, np.sqrt(var)]
+    return (var, std)
