@@ -1,6 +1,5 @@
 def hit_rate_at_k(recommendations, ground_truth, k):
-    hits = 0
-    total = len(ground_truth)
+    hits, total = 0, len(ground_truth)
 
     for recs, true_items in zip(recommendations, ground_truth):
         top_k = recs[:k]
