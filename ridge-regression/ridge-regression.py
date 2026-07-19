@@ -1,13 +1,7 @@
 import numpy as np
 
 def ridge_regression(X, y, lam):
-    X = np.array(X, dtype=float)
-    y = np.array(y, dtype=float)
+    X = np.array(X)
+    y = np.array(y)
 
-    n_features = X.shape[1]
-
-    I = np.eye(n_features)
-
-    theta = np.linalg.inv(X.T @ X + lam * I) @ X.T @ y
-
-    return theta
+    return np.linalg.inv((X.T @ X) + (lam * np.eye(X.shape[1]))) @ X.T @ y
