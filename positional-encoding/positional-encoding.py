@@ -1,13 +1,16 @@
 import numpy as np
 
 def positional_encoding(seq_len, d_model, base=10000.0):
-    encoded = np.zeros((seq_len, d_model), dtype=float)
+    R = np.empty((0, d_model), dtype=float)
 
-    for i in range(seq_len):
-        for j in range(d_model):
-            if j & 1:
-                encoded[i][j] = np.cos(i / (np.power(base, (j - 1) / d_model)))
-            else:
-                encoded[i][j] = np.sin(i / (np.power(base, j / d_model)))
+    for seq_i in range(seq_len):
+        pe = np.array([], dtype=float)
+        for i in range((d_model + 1) // 2):
+            pe = np.append(pe, np.sin(seq_i / np.power(base, 2 * i / d_model)))
+            pe = np.append(pe, np.cos(seq_i / np.power(base, 2 * i / d_model)))
+        if d_model & 1:
+            pe = pe[:-1]
 
-    return encoded
+        R = np.vstack([R, pe])
+        
+    return R
