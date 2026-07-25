@@ -1,22 +1,20 @@
 import numpy as np
-from collections import Counter
 
 def gini_impurity(y_left, y_right):
-    N_left, N_right = len(y_left), len(y_right)
-    N = N_left + N_right
+    N_l, N_r = len(y_left), len(y_right)
+    N = N_l + N_r
+
     if N == 0:
         return 0.0
 
-    freq_left = Counter(y_left)
-    freq_right = Counter(y_right)
+    G_l = 1
+    Glset = set(y_left)
+    for C in Glset:
+        G_l -= (y_left.count(C) / len(y_left)) ** 2
+        
+    G_r = 1
+    Grset = set(y_right)
+    for C in Grset:
+        G_r -= (y_right.count(C) / len(y_right)) ** 2
 
-    gini_left = 1
-    if N_left > 0:
-        for cnt in freq_left.values():
-            gini_left -= (cnt / N_left) ** 2
-    gini_right = 1
-    if N_right > 0:
-        for cnt in freq_right.values():
-            gini_right -= (cnt / N_right) ** 2
-
-    return ((N_left / N) * gini_left) + ((N_right / N) * gini_right)
+    return N_l / N * G_l + N_r / N * G_r
