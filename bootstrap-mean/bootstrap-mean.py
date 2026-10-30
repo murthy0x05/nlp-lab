@@ -12,7 +12,7 @@ def bootstrap_mean(x: list, n_bootstrap: int = 1000, ci: float = 0.95, seed: int
     means = np.mean(bs, axis = 1)
 
     alpha = (1 - ci) / 2
-    lower = np.quantile(means, alpha)
+    lower = np.percentile(means, 100 * alpha)
     upper = np.quantile(means, 1 - alpha)
     
     return {
