@@ -1,22 +1,22 @@
 import numpy as np
 
-def bootstrap_mean(x, n_bootstrap=1000, ci=0.95, rng=None):
+def bootstrap_mean(x: list, n_bootstrap: int = 1000, ci: float = 0.95, seed: int = 0) -> dict:
     """
-    Returns: (boot_means, lower, upper)
+    Returns a dictionary with bootstrap_mean, lower, and upper.
     """
-    x = np.asarray(x)
+    N = len(x)
+
+    gen = np.random.default_rng(seed = seed)
+    bs = gen.choice(x, size = (n_bootstrap, N), replace = True)
+
+    means = np.mean(bs, axis = 1)
+
+    alpha = (1 - ci) / 2
+    lower = np.quantile(means, alpha)
+    upper = np.quantile(means, 1 - alpha)
     
-    if rng is None:
-        rng = np.random.default_rng()
-    
-    n = len(x)
-    
-    samples = rng.choice(x, size=(n_bootstrap, n), replace=True)
-    
-    boot_means = samples.mean(axis=1)
-    
-    alpha = 1 - ci
-    lower = np.percentile(boot_means, 100 * (alpha / 2))
-    upper = np.percentile(boot_means, 100 * (1 - alpha / 2))
-    
-    return boot_means, lower, upper
+    return {
+        "bootstrap_mean": np.mean(means),
+        "lower": lower,
+        "upper": upper
+    }
